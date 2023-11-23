@@ -1,6 +1,6 @@
 import {useState} from "react";
 import enterIcon from  '../../assets/icons/enter.png'
-const Login = (props) => {
+const LoginButton = (props) => {
     const [logged, setLogged] = useState(props.logged);
 
     return(
@@ -11,4 +11,4 @@ const Login = (props) => {
     )
 }
 
-export default Login;
+export default LoginButton;

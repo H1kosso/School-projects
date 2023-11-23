@@ -1,0 +1,8 @@
+.loginContainer {
+    width: 50%;
+    height: 80%;
+    background-color: lightgray;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 50px auto 400px;
+}

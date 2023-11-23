@@ -1,4 +1,4 @@
-import placeholderPoster from  '../../assets/placeholderPoster.jpg'
+import placeholderPoster from '../../../assets/placeholderPoster.jpg'
 
 const MovieCard = (props) => {
 
