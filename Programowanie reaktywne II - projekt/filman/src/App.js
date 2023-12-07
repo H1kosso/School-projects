@@ -8,24 +8,28 @@ import Login from "./components/Layouts/LoginLayout/Login";
 import Register from "./components/Layouts/LoginLayout/Register";
 
 function App() {
+
+
     return (
         <>
+            <div style={{backgroundColor: "bisque"}}>
+                <BrowserRouter>
+                    <NavBar/>
+                    <Routes>
+                        <Route path="/" element={<Movies/>}/>
+                        <Route path="login" element={<Login/>}/>
+                        <Route path="register" element={<Register/>}/>
+                        <Route
+                            path="*"
+                            element={
+                                <Movies/>
+                            }
+                        />
+                    </Routes>
+                    <Footer/>
+                </BrowserRouter>
+            </div>
 
-            <BrowserRouter>
-                <NavBar/>
-                <Routes>
-                    <Route path="/" element={<Movies/>}/>
-                    <Route path="login" element={<Login/>}/>
-                    <Route path="register" element={<Register/>}/>
-                    <Route
-                        path="*"
-                        element={
-                            <Movies/>
-                        }
-                    />
-                </Routes>
-                <Footer/>
-            </BrowserRouter>
 
         </>
     );

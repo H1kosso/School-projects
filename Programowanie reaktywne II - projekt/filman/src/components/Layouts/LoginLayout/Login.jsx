@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import '../../../styles/Login.css'
@@ -58,7 +58,7 @@ const Login = () => {
     };
 
     const handleChange = (event) => {
-        const { name, value } = event.target;
+        const {name, value} = event.target;
         setAccount((prevAccount) => ({
             ...prevAccount,
             [name]: value
@@ -100,10 +100,10 @@ const Login = () => {
                         <div className="alert alert-danger">{errors.password}</div>
                     )}
                 </div>
-                <button type="submit" className="btn btn-primary" style={{marginTop:"20px"}}>
-                    Zaloguj
-                </button>
-                <Link className="btn btn-danger" to="/register" role="button">Zarejestruj się</Link>
+                <div style={{textAlign: "center",display:"flex", justifyContent:"space-evenly", marginTop: "30px" }}>
+                    <button type="submit" className="btn btn-danger" style={{width:"25%"}}>Zaloguj</button>
+                    <Link className="btn btn-danger"  style={{width:"25%"}} to="/register" role="button">Zarejestruj się</Link>
+                </div>
             </form>
         </div>
     );

@@ -121,10 +121,10 @@ const Register = () => {
                         <div className="alert alert-danger">{errors.password}</div>
                     )}
                 </div>
-                <button type="submit" className="btn btn-primary" style={{marginTop:"20px"}}>
-                    Zarejestruj
-                </button>
-                <Link className="btn btn-danger" to="/login" role="button">Zaloguj się</Link>
+                <div style={{textAlign: "center",display:"flex", justifyContent:"space-evenly", marginTop:"30px"}}>
+                    <button type="submit" className="btn btn-danger" style={{width:"25%"}}>Zarejestruj</button>
+                    <Link className="btn btn-danger"  style={{width:"25%"}} to="/login" role="button">Zaloguj się</Link>
+                </div>
             </form>
         </div>
     );
