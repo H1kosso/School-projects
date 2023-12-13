@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
@@ -8,6 +8,7 @@ import HomeScreen from './screens/HomeScreen';
 import ResultsScreen from './screens/ResultScreen';
 import QuizScreen from './screens/QuizScreen';
 import TermsScreen from './screens/TermsScreen';
+import {Asset as Font} from "expo-asset";
 
 const CustomDrawer = (props) => {
     return (
@@ -44,35 +45,50 @@ function DrawerNavigator() {
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
-export default class App extends Component {
-    async componentDidMount() {
-        await SplashScreen.preventAutoHideAsync();
-        // Hide splash screen after 2 seconds
-        setTimeout(() => {
-            SplashScreen.hideAsync();
-        }, 2000);
+export default function App () {
+    const [isLoadingComplete, setLoadingComplete] = useState(false);
+
+    async function loadResourcesAsync() {
+        await Promise.all([
+            Font.loadAsync({
+                'Lobster': require('./assets/fonts/Lobster.ttf'),
+                'OpenSans': require('./assets/fonts/OpenSans.ttf'),
+            })
+        ]);
+        setLoadingComplete(true);
     }
 
-    render() {
-        return (
-            <NavigationContainer>
-                <Stack.Navigator initialRouteName="Empty">
-                    <Stack.Screen
-                        name="Root"
-                        component={DrawerNavigator}
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen name="Terms" component={TermsScreen} />
-                    <Stack.Screen name="Home" component={HomeScreen} />
-                    <Stack.Screen name="Quiz" component={QuizScreen} />
-                    <Stack.Screen name="Results" component={ResultsScreen} />
-                </Stack.Navigator>
-            </NavigationContainer>
-        );
-    }
+    loadResourcesAsync().then();
+
+    // const getInitialPage = async () => {
+    //     const showTerms = await AsyncStorage.getItem('terms');
+    //     if (showTerms) return 'Terms';
+    //     return 'Home';
+    // }
+
+
+
+    return (
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName={HomeScreen}>
+                <Stack.Screen
+                    name="Root"
+                    component={DrawerNavigator}
+                    options={{headerShown: false}}
+                />
+                <Stack.Screen name="Home" component={HomeScreen}/>
+                <Stack.Screen name="Quiz" component={QuizScreen}/>
+                <Stack.Screen name="Results" component={ResultsScreen}/>
+                <Stack.Screen name="Terms" component={TermsScreen}/>
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 }
 
 const styles = StyleSheet.create({
+    app: {
+      fontFamily: 'OpenSans',
+    },
     header: {
         height: 200,
         justifyContent: 'center',

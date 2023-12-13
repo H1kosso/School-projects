@@ -1,24 +1,39 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, StyleSheet, Text, Button, FlatList, RefreshControl} from 'react-native';
+import {FlatList, RefreshControl, StyleSheet, Text, View} from 'react-native';
 import {Card} from "react-native-paper";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import quizMock from "../assets/mock/quizMock";
+import ApiManager from "../api/ApiManager";
+import {Asset as Font} from "expo-asset";
+
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
 }
+
 const HomeScreen = ({navigation}) => {
     const [refreshing, setRefreshing] = useState(false);
+    const [resultsData, setResultsData] = useState([]);
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
-        wait(2000).then(() => setRefreshing(false));
+        fetchData().then(() => setRefreshing(false));
+    }, []);
+
+    const fetchData = async () => {
+        const result = await ApiManager.getAllTests();
+        setResultsData(result);
+    }
+
+    useEffect(() => {
+        fetchData().then();
     }, []);
 
     const renderItem = ({item}) => (
         <Pressable onPress={() => navigation.navigate('Quiz', { item: item },)}>
             <Card style={styles.itemCard}>
-                <Text>{item.name}</Text>
-                <Text>{item.description}</Text>
+                <Text style={styles.itemTitle}>{item.name}</Text>
+                <Text style={styles.itemDescription}>{item.description}</Text>
+                <Text style={styles.itemTags}>Tagi: {item.tags.join(', ')}</Text>
             </Card>
         </Pressable>
     );
@@ -27,19 +42,19 @@ const HomeScreen = ({navigation}) => {
         <View>
             <FlatList
                 contentContainerStyle={styles.scrollView}
-                data={quizMock}
+                data={resultsData}
                 renderItem={renderItem}
                 refreshControl={
                     <RefreshControl
                         refreshing={refreshing}
-                        // onRefresh={onRefresh}
+                        onRefresh={onRefresh}
                     />
                 }
             />
             <Card style={styles.card}>
-                <Text style={styles.heading}>Sprawdź swoje wyniki</Text>
+                <Text style={styles.heading}>Get to know your ranking result</Text>
                 <Pressable style={styles.button} onPress={() => navigation.navigate('Results')}>
-                    <Text style={styles.buttonTitle}>Wyniki!</Text>
+                    <Text style={styles.buttonTitle}>Check!</Text>
                 </Pressable>
             </Card>
         </View>
@@ -51,6 +66,17 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         margin: 15,
         padding: 15,
+    },
+    itemTitle: {
+        //fontFamily: 'Lobster',
+        fontSize: 20,
+    },
+    itemDescription: {
+        fontStyle: 'italic',
+    },
+    itemTags: {
+        marginTop: 20,
+        fontWeight: 'bold',
     },
     heading: {
         textAlign: 'center',

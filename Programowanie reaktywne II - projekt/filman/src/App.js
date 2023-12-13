@@ -6,6 +6,8 @@ import Movies from "./components/Layouts/MoviesLayout/Movies";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Login from "./components/Layouts/LoginLayout/Login";
 import Register from "./components/Layouts/LoginLayout/Register";
+import MovieDetails from "./components/Layouts/DetailsLayout/MovieDetails";
+import AddMovie from "./components/Layouts/AddLayout/AddMovie";
 
 function App() {
 
@@ -19,6 +21,8 @@ function App() {
                         <Route path="/" element={<Movies/>}/>
                         <Route path="login" element={<Login/>}/>
                         <Route path="register" element={<Register/>}/>
+                        <Route path="details" element={<MovieDetails/>}/>
+                        <Route path="add" element={<AddMovie/>}/>
                         <Route
                             path="*"
                             element={
@@ -29,8 +33,6 @@ function App() {
                     <Footer/>
                 </BrowserRouter>
             </div>
-
-
         </>
     );
 }

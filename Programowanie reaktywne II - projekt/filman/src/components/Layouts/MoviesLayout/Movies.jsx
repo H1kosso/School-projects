@@ -5,7 +5,7 @@ const Movies = (props) => {
     return(
         <div>
             <div className="d-flex flex-row flex-wrap justify-content-center" >
-                {ExampleMovies.map((movie) => <MovieCard title={movie.title} description={movie.desc} />)}
+                {ExampleMovies.map((movie) => <MovieCard  title={movie.title} description={movie.desc} />)}
             </div>
         </div>
     )

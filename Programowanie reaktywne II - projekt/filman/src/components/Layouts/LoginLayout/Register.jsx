@@ -91,22 +91,40 @@ const Register = () => {
                     )}
                 </div>
                 <div className="form-group">
-                    <label htmlFor="username">Nazwa użytkownika: </label>
+                    <label htmlFor="username">Login: </label>
                     <input
-                        value={account.username}
-                        name="username"
+                        value={account.login}
+                        name="login"
                         onChange={handleChange}
                         type="text"
                         className="form-control"
                         id="username"
                         aria-describedby="emailHelp"
-                        placeholder="Nazwa użytkownika"
+                        placeholder="Login"
                     />
                     {errors.username && (
                         <div className="alert alert-danger">{errors.username}</div>
                     )}
                 </div>
                 <div className="form-group">
+                    <div className="form-group">
+                        <label htmlFor="username">Nazwa: </label>
+                        <input
+                            value={account.username}
+                            name="username"
+                            onChange={handleChange}
+                            type="text"
+                            className="form-control"
+                            id="username"
+                            aria-describedby="emailHelp"
+                            placeholder="Nazwa użytkownika"
+                        />
+                        {errors.username && (
+                            <div className="alert alert-danger">{errors.username}</div>
+                        )}
+                    </div>
+                </div>
+                    <div className="form-group">
                     <label htmlFor="password">Hasło: </label>
                     <input
                         value={account.password}
@@ -115,7 +133,7 @@ const Register = () => {
                         type="password"
                         className="form-control"
                         id="password"
-                        placeholder="hasło"
+                        placeholder="Hasło"
                     />
                     {errors.password && (
                         <div className="alert alert-danger">{errors.password}</div>
