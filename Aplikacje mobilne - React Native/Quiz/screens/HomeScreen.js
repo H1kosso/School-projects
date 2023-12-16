@@ -52,9 +52,9 @@ const HomeScreen = ({navigation}) => {
                 }
             />
             <Card style={styles.card}>
-                <Text style={styles.heading}>Get to know your ranking result</Text>
+                <Text style={styles.heading}>Przejdź do wyników</Text>
                 <Pressable style={styles.button} onPress={() => navigation.navigate('Results')}>
-                    <Text style={styles.buttonTitle}>Check!</Text>
+                    <Text style={styles.buttonTitle}>Sprawdź!</Text>
                 </Pressable>
             </Card>
         </View>
