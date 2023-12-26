@@ -4,7 +4,10 @@ import {Card} from "react-native-paper";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import quizMock from "../assets/mock/quizMock";
 import ApiManager from "../api/ApiManager";
-import {Asset as Font} from "expo-asset";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import _ from "lodash";
+import * as Font from "expo-font";
+
 
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
@@ -13,23 +16,41 @@ const wait = (timeout) => {
 const HomeScreen = ({navigation}) => {
     const [refreshing, setRefreshing] = useState(false);
     const [resultsData, setResultsData] = useState([]);
+    const [fontsLoaded, setFontsLoaded] = useState(false);
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
         fetchData().then(() => setRefreshing(false));
     }, []);
 
-    const fetchData = async () => {
-        const result = await ApiManager.getAllTests();
-        setResultsData(result);
-    }
+
 
     useEffect(() => {
+        const loadFonts = async () => {
+            await Font.loadAsync({
+                'Lobster': require('../assets/fonts/Lobster.ttf'),
+                 'OpenSans': require('../assets/fonts/OpenSans.ttf')
+            });
+            setFontsLoaded(true);
+        };
+        const fetchData = async () => {
+            const cachedResult = JSON.parse(await AsyncStorage.getItem('storage-tests'));
+            setResultsData(_.shuffle(cachedResult));
+            try {
+                const result = await ApiManager.getAllTests();
+                setResultsData(_.shuffle(result));
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        loadFonts().then();
         fetchData().then();
     }, []);
 
+
     const renderItem = ({item}) => (
-        <Pressable onPress={() => navigation.navigate('Quiz', { item: item },)}>
+        <Pressable onPress={() => navigation.navigate('Quiz', {item: item},)}>
             <Card style={styles.itemCard}>
                 <Text style={styles.itemTitle}>{item.name}</Text>
                 <Text style={styles.itemDescription}>{item.description}</Text>
@@ -38,7 +59,7 @@ const HomeScreen = ({navigation}) => {
         </Pressable>
     );
 
-    return (
+    return !fontsLoaded ? (<Text>Wait</Text>) : (
         <View>
             <FlatList
                 contentContainerStyle={styles.scrollView}
@@ -68,15 +89,17 @@ const styles = StyleSheet.create({
         padding: 15,
     },
     itemTitle: {
-        //fontFamily: 'Lobster',
         fontSize: 20,
+        fontFamily: 'Lobster',
     },
     itemDescription: {
         fontStyle: 'italic',
+
     },
     itemTags: {
         marginTop: 20,
         fontWeight: 'bold',
+        fontFamily: 'Lobster',
     },
     heading: {
         textAlign: 'center',

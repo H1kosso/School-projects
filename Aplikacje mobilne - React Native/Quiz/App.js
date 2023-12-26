@@ -2,25 +2,37 @@ import React, {Component, useEffect, useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
-import { StyleSheet, Text, View, Image, AsyncStorage } from 'react-native';
+import {StyleSheet, Text, View, Image, Button, LogBox} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SplashScreen from 'expo-splash-screen';
 import HomeScreen from './screens/HomeScreen';
 import ResultsScreen from './screens/ResultScreen';
 import QuizScreen from './screens/QuizScreen';
 import TermsScreen from './screens/TermsScreen';
-import {Asset as Font} from "expo-asset";
+import { useFonts } from 'expo-font';
+import Toast from "react-native/Libraries/Components/ToastAndroid/ToastAndroid";
+import ApiManager from "./api/ApiManager";
+import _ from "lodash";
+import NetInfo from '@react-native-community/netinfo';
 
-const CustomDrawer = (props) => {
+const DrawerContent = (props) => {
     return (
         <View>
             <View style={styles.header}>
                 <Text>Quiz App</Text>
                 <Image source={require('./assets/quizLogo.png')} style={styles.logo} />
+                <View style={styles.sizedBox}/>
+                <Button onPress={ApiManager.fetchAllDatabase} title={'Pobierz bazę danych'}/>
+                <View style={styles.sizedBox}/>
+                <Button onPress={() => ApiManager.getRandomTest(props)} title={'Losuj test'}/>
+                <View style={styles.sizedBox}/>
             </View>
             <DrawerItemList {...props} />
         </View>
     );
 };
+
+
 
 function DrawerNavigator() {
     return (
@@ -34,7 +46,7 @@ function DrawerNavigator() {
                 },
                 headerTitle: '',
             }}
-            drawerContent={(props) => <CustomDrawer {...props} />}
+            drawerContent={(props) => <DrawerContent {...props} />}
         >
             <Drawer.Screen name="Menu" component={HomeScreen} />
             <Drawer.Screen name="Result" component={ResultsScreen} />
@@ -46,31 +58,46 @@ const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 export default function App () {
-    const [isLoadingComplete, setLoadingComplete] = useState(false);
+    LogBox.ignoreAllLogs();
+    const [isLoadingComplete, setLoadingComplete] = useState(true);
+    const [isConnectedToNetwork, setIsConnectedToNetwork] = useState(false);
 
-    async function loadResourcesAsync() {
-        await Promise.all([
-            Font.loadAsync({
-                'Lobster': require('./assets/fonts/Lobster.ttf'),
-                'OpenSans': require('./assets/fonts/OpenSans.ttf'),
-            })
-        ]);
-        setLoadingComplete(true);
+
+    useEffect(async () => {
+
+        await setUpInitial();
+    }, []);
+
+    const setUpInitial = async () => {
+        //await loadResourcesAsync();
+        await ApiManager.fetchAllDatabase();
+        const unsubscribe = NetInfo.addEventListener(state => {
+            if( state.isConnected !== isConnectedToNetwork ) {
+                setIsConnectedToNetwork(state.isConnected);
+                if( !state.isConnected ) {
+                    Toast.show('No network connection', 1000);
+                } else {
+                    Toast.show('Connected to network', 1000);
+                }
+            }
+        });
+        unsubscribe();
+
     }
 
-    loadResourcesAsync().then();
+    const getInitialPage = async () => {
+        const showTerms = await AsyncStorage.getItem('terms');
+        if (showTerms) return 'Terms';
+        return 'Home';
+    }
 
-    // const getInitialPage = async () => {
-    //     const showTerms = await AsyncStorage.getItem('terms');
-    //     if (showTerms) return 'Terms';
-    //     return 'Home';
-    // }
-
-
+    if( !isLoadingComplete ) {
+        return <Text>Loading</Text>
+    }
 
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName={HomeScreen}>
+            <Stack.Navigator initialRouteName={getInitialPage}>
                 <Stack.Screen
                     name="Root"
                     component={DrawerNavigator}
@@ -87,7 +114,7 @@ export default function App () {
 
 const styles = StyleSheet.create({
     app: {
-      fontFamily: 'OpenSans',
+      fontFamily: 'Lobster',
     },
     header: {
         height: 200,
