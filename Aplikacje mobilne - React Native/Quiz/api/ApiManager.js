@@ -1,5 +1,7 @@
 import _ from "lodash";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast from "react-native/Libraries/Components/ToastAndroid/ToastAndroid";
+
 const serverUrl = 'https://tgryl.pl';
 
 class ApiManager {

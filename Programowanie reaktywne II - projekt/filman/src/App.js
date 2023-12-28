@@ -21,7 +21,7 @@ function App() {
                         <Route path="/" element={<Movies/>}/>
                         <Route path="login" element={<Login/>}/>
                         <Route path="register" element={<Register/>}/>
-                        <Route path="details" element={<MovieDetails/>}/>
+                        <Route path="details/:id" element={<MovieDetails/>}/>
                         <Route path="add" element={<AddMovie/>}/>
                         <Route
                             path="*"

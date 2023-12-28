@@ -125,4 +125,12 @@ const styles = StyleSheet.create({
         height: 80,
         width: 80,
     },
+    button: {
+        textAlign: 'center',
+        paddingTop: 15,
+        paddingBottom: 15,
+        paddingStart: 20,
+        paddingEnd: 20,
+        backgroundColor: '#eeeeee'
+    },
 });
