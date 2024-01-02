@@ -66,7 +66,7 @@ class ApiManager {
         props.navigation.navigate('Quiz', { item: test });
     }
      fetchAllDatabase = async () => {
-        Toast.show('Pobieram bazę danych', 1000);
+        Toast.show('Pobieram bazę danych', 500);
         const results = await this.getResults();
         const tests = await this.getAllTests();
         let testsDetails = {};
@@ -77,7 +77,7 @@ class ApiManager {
         await AsyncStorage.setItem('storage-results', JSON.stringify(results));
         await AsyncStorage.setItem('storage-tests', JSON.stringify(tests));
         await AsyncStorage.setItem('storage-tests-details', JSON.stringify(testsDetails));
-        Toast.show('Baza została pobrana', 1000);
+        Toast.show('Baza została pobrana', 500);
     }
 }
 

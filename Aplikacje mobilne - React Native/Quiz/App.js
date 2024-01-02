@@ -9,10 +9,8 @@ import HomeScreen from './screens/HomeScreen';
 import ResultsScreen from './screens/ResultScreen';
 import QuizScreen from './screens/QuizScreen';
 import TermsScreen from './screens/TermsScreen';
-import { useFonts } from 'expo-font';
 import Toast from "react-native/Libraries/Components/ToastAndroid/ToastAndroid";
 import ApiManager from "./api/ApiManager";
-import _ from "lodash";
 import NetInfo from '@react-native-community/netinfo';
 
 const DrawerContent = (props) => {
@@ -69,7 +67,6 @@ export default function App () {
     }, []);
 
     const setUpInitial = async () => {
-        //await loadResourcesAsync();
         await ApiManager.fetchAllDatabase();
         const unsubscribe = NetInfo.addEventListener(state => {
             if( state.isConnected !== isConnectedToNetwork ) {

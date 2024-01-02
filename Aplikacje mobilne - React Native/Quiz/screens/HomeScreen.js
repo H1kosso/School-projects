@@ -2,16 +2,12 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {FlatList, RefreshControl, StyleSheet, Text, View} from 'react-native';
 import {Card} from "react-native-paper";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
-import quizMock from "../assets/mock/quizMock";
 import ApiManager from "../api/ApiManager";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import _ from "lodash";
 import * as Font from "expo-font";
 
 
-const wait = (timeout) => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-}
 
 const HomeScreen = ({navigation}) => {
     const [refreshing, setRefreshing] = useState(false);
@@ -20,7 +16,7 @@ const HomeScreen = ({navigation}) => {
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
-        fetchData().then(() => setRefreshing(false));
+        ApiManager.getAllTests().then(() => setRefreshing(false));
     }, []);
 
 

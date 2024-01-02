@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import placeholderPoster from '../../../assets/placeholderPoster.jpg';
-import { getMovieDetails } from '../../../api/ApiManager';
+import {deleteMovie, getMovieDetails} from '../../../api/ApiManager';
 
 const MovieDetails = (props) => {
     const [movie, setMovie] = useState({});
     const currentUrl = window.location.href;
+    const [Id, setId] = useState("")
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const movieId = getMovieIdFromUrl(currentUrl);
+                setId(movieId);
                 const data = await getMovieDetails(movieId);
                 if (data) {
                     setMovie(data);
@@ -20,8 +22,13 @@ const MovieDetails = (props) => {
             }
         };
 
-        fetchData();
+        fetchData().then();
     }, [currentUrl]);
+
+    const handleDelete = () => {
+        console.log(Id)
+        deleteMovie(Id).then();
+    }
 
     const getMovieIdFromUrl = (url) => {
         const lastSlashIndex = url.lastIndexOf('/');
@@ -45,6 +52,11 @@ const MovieDetails = (props) => {
                         className="img-fluid"
                         style={imageStyle}
                     />
+                    <div className="d-flex justify-content-center">
+                        <button type="button" className="btn btn-danger" onClick={handleDelete}>
+                            Usuń ten film
+                        </button>
+                    </div>
                 </div>
                 <div className="col-md-6">
                     <h1 style={{ marginTop: '50px' }}>

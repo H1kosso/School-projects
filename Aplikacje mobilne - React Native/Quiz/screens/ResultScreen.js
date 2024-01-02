@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {FlatList, View, Text, StyleSheet, RefreshControl} from 'react-native';
 import {Card} from "react-native-paper";
 import ApiManager from "../api/ApiManager";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const ResultScreen = ({navigation}) => {
     const [refreshing, setRefreshing] = useState(false);
