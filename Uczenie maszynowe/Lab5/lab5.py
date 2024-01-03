@@ -11,7 +11,7 @@ from sklearn.metrics import accuracy_score, classification_report, mean_squared_
 
 # Wczytaj dane
 
-home_prices_csv = pd.read_csv('D:\home_prices.csv')
+home_prices_csv = pd.read_csv('Home_prices.csv')
 home_prices_df = pd.DataFrame(home_prices_csv)
 
 print(home_prices_df.head())
@@ -24,13 +24,15 @@ home_prices_df.dropna()
 y_columns = 'SalePrice'
 Y = home_prices_df[y_columns]
 
-x_columns = ['OverallQual', 'OverallCond', 'YearBuilt', 'TotalBsmtSF', '1stFlrSF', '2ndFlrSF', 'GrLivArea']
+x_columns = ['OverallQual', 'OverallCond', 'YearBuilt', 'TotalBsmtSF', '1stFlrSF', '2ndFlrSF',
+             'GrLivArea', 'LotArea', 'BsmtFinSF1', 'BsmtUnfSF', 'TotalBsmtSF',
+             'FullBath', 'HalfBath', 'BedroomAbvGr', 'TotRmsAbvGrd', 'GarageArea']
 X = home_prices_df[x_columns]
 
 # Statystyki
 print(X.describe())
 
-X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.1, random_state=42)
 
 classifiers = [
     ('Linear Regression', LinearRegression()),

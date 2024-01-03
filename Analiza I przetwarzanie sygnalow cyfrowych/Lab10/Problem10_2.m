@@ -24,6 +24,7 @@ else
     x = [x, zeros(1, length(m) - length(x))];
 end
 xm = x + m;
+
 if length(xup) > length(m)
     m = [m, zeros(1, length(xup) - length(m))];
 else
@@ -32,7 +33,7 @@ end
 xupm = xup + m;
 
 
-pause;
+%pause;
 soundsc(xm, 48000);
 pause;
 soundsc(xupm, 48000);
