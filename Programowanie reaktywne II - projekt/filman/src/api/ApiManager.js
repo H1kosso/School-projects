@@ -38,8 +38,13 @@ const addMovie = async (title, image, content) => {
 
 const deleteMovie = async (id) => {
     try {
-        console.error(id)
-        const response = await axios.delete(`${apiUrl}api/movie/${id}`);
+        const token = localStorage.getItem('token');
+        console.log(token)
+        const response = await axios.delete(`${apiUrl}api/movie/${id}`, {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        });
         console.log('Usunięto film:', response.data);
     } catch (error) {
         console.error('Błąd podczas usuwania filmu:', error.message);
@@ -54,6 +59,7 @@ const createUser = async (name, email, password) => {
             password: password,
         });
         console.log('Utworzono użytkownika :', response.data);
+        return response.data;
 
     } catch (error) {
         console.error('Błąd podczas dodawania użytkownika:', error.message);

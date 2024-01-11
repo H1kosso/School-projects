@@ -3,7 +3,8 @@ import {Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import '../../../styles/Login.css'
 import LoginButton from "../../common/LoginButton";
-
+import '../../../api/ApiManager'
+import {createUser} from "../../../api/ApiManager";
 const Register = () => {
     let navigate = useNavigate()
 
@@ -43,20 +44,15 @@ const Register = () => {
         setErrors(validationErrors || {});
         if (validationErrors) return;
 
-        axios
-            .post('http://localhost:3001/api/user/auth', {
-                login: account.username,
-                password: account.password,
-                email: account.email
-            })
+        createUser(account.username, account.email, account.password)
             .then((response) => {
-                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('token', response.id);
                 handleChangeRoute();
-            })
+        })
             .catch((error) => {
                 const errorMessages = {};
                 errorMessages.password =
-                    "Given username doesn't exist or the password is wrong!";
+                    "Błąd podczas tworzenia użytkownika";
                 setErrors(errorMessages || {});
                 console.log(error);
             });
@@ -91,38 +87,20 @@ const Register = () => {
                     )}
                 </div>
                 <div className="form-group">
-                    <label htmlFor="username">Login: </label>
+                    <label htmlFor="username">Nazwa użytkownika: </label>
                     <input
-                        value={account.login}
-                        name="login"
+                        value={account.username}
+                        name="username"
                         onChange={handleChange}
                         type="text"
                         className="form-control"
                         id="username"
                         aria-describedby="emailHelp"
-                        placeholder="Login"
+                        placeholder="Nazwa użytkownika"
                     />
                     {errors.username && (
                         <div className="alert alert-danger">{errors.username}</div>
                     )}
-                </div>
-                <div className="form-group">
-                    <div className="form-group">
-                        <label htmlFor="username">Nazwa: </label>
-                        <input
-                            value={account.username}
-                            name="username"
-                            onChange={handleChange}
-                            type="text"
-                            className="form-control"
-                            id="username"
-                            aria-describedby="emailHelp"
-                            placeholder="Nazwa użytkownika"
-                        />
-                        {errors.username && (
-                            <div className="alert alert-danger">{errors.username}</div>
-                        )}
-                    </div>
                 </div>
                     <div className="form-group">
                     <label htmlFor="password">Hasło: </label>

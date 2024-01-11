@@ -1,12 +1,11 @@
-import {useState} from "react";
-import enterIcon from  '../../assets/icons/enter.png'
-const LoginButton = (props) => {
-    const [logged, setLogged] = useState(props.logged);
+import {useEffect, useState} from "react";
+import enterIcon from '../../assets/icons/enter.png'
 
-    return(
-        <div style={{ display: "flex", alignItems: "center" }}>
-            <img className="m-0" style={{width: "15px" }} src={enterIcon}></img>
-            <span className="me-3">Marcin</span>
+const LoginButton = (props) => {
+
+    return (
+        <div style={{display: "flex", alignItems: "center", padding: "auto"}}>
+            Zaloguj się
         </div>
     )
 }

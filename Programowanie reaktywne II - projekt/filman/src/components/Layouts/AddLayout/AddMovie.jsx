@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Button from "../../basic/Button";
 import React, {useEffect, useState} from "react";
 import {addMovie} from "../../../api/ApiManager"
@@ -7,7 +7,7 @@ const AddMovie = (props) => {
     const [title, setTitle] = useState("")
     const [poster, setPoster] = useState("")
     const [content, setContent] = useState("")
-
+    const navigate = useNavigate()
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
     };
@@ -20,7 +20,10 @@ const AddMovie = (props) => {
         setContent(e.target.value);
     };
     const handleSubmit = () => {
-       addMovie(title, poster, content).then();
+       addMovie(title, poster, content).then( () => {
+           navigate('/');
+           window.location.reload();
+       });
     };
 
     return(
@@ -54,10 +57,10 @@ const AddMovie = (props) => {
                     ></textarea>
                 </div>
 
-
-                    <button type="button" className="btn btn-danger" onClick={handleSubmit}>Dodaj</button>
-                    <button type="reset" className="btn btn-danger">Wyczyść</button>
-
+                <div style={{textAlign: "center",display:"flex", justifyContent:"space-evenly", marginTop: "30px" }}>
+                    <button type="button" className="btn btn-danger" onClick={handleSubmit} style={{width:"25%"}}>Dodaj</button>
+                    <button type="reset" className="btn btn-danger" style={{width:"25%"}}>Wyczyść</button>
+                </div>
             </form>
         </div>
     )

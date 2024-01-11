@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import Button from "../basic/Button";
 import LoginButton from "./LoginButton";
+import LogoutButton from "./LogoutButton";
 
 const NavBar = () => {
     return (
@@ -21,23 +22,34 @@ const NavBar = () => {
                         className="btn btn-outline-secondary"
                         type="submit"
                         title={"Szukaj"}
+
                     />
                 </form>
+
                 <div className="d-flex">
-                    <Link
+                    {localStorage.getItem('token') !== null ?
+                        <Link
                         className="btn btn-danger me-2"
                         to="/add"
-                        role="button"
-                    >
+                        role="button">
                         Dodaj nowy film
                     </Link>
-                    <Link
-                        className="btn btn-danger"
-                        to="/login"
-                        role="button"
-                    >
-                        <LoginButton/>
-                    </Link>
+                    :
+                        <span></span>
+                    }
+
+                    { localStorage.getItem('token') === null ? (
+                        <Link
+                            className="btn btn-danger"
+                            to="/login"
+                            role="button">
+                            <LoginButton/>
+                        </Link>
+                    ) : (
+                            <LogoutButton/>
+                    )}
+
+
                 </div>
             </div>
         </nav>

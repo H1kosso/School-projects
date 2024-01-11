@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import placeholderPoster from '../../../assets/placeholderPoster.jpg';
 import {deleteMovie, getMovieDetails} from '../../../api/ApiManager';
+import {useNavigate} from "react-router-dom";
 
 const MovieDetails = (props) => {
     const [movie, setMovie] = useState({});
     const currentUrl = window.location.href;
     const [Id, setId] = useState("")
+    let navigate = useNavigate()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,7 +29,10 @@ const MovieDetails = (props) => {
 
     const handleDelete = () => {
         console.log(Id)
-        deleteMovie(Id).then();
+        deleteMovie(Id).then( () =>  {
+            navigate('/');
+            window.location.reload()
+        });
     }
 
     const getMovieIdFromUrl = (url) => {

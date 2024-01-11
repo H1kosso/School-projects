@@ -3,7 +3,8 @@ import {Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import '../../../styles/Login.css'
 import LoginButton from "../../common/LoginButton";
-
+import '../../../api/ApiManager'
+import {authUser} from "../../../api/ApiManager";
 const Login = () => {
     let navigate = useNavigate()
 
@@ -39,13 +40,10 @@ const Login = () => {
         setErrors(validationErrors || {});
         if (validationErrors) return;
 
-        axios
-            .post('http://localhost:3001/api/user/auth', {
-                login: account.username,
-                password: account.password
-            })
+        authUser(account.username, account.password)
             .then((response) => {
-                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('token', response.token);
+                console.log(response.token);
                 handleChangeRoute();
             })
             .catch((error) => {
