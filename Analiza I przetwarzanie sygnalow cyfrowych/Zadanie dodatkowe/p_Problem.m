@@ -8,9 +8,9 @@ t = dt*(0:Nx-1);        % chwile pobierania probek
 % Sygnał przypominający syrenę
 syrena = zeros(1, Nx);
 syrena = syrena + sin(2*pi*5*t); 
-syrena = syrena + 0.5 * sin(2*pi*(0*t+0.5*30*t.^2));
-syrena = syrena + 0.5 * sin(2*pi*(30*t-(9/(2*pi*1)*cos(2*pi*5*t)))); 
-syrena = 4*syrena;
+syrena = syrena + 0.5 * sin(2*pi*(0*t+0.5*300*t.^2));
+syrena = syrena + 0.5 * sin(2*pi*(500*t-(200/(2*pi*5)*cos(2*pi*5*t)))); 
+syrena = 0.5*syrena;
 
 
 ss = syrena + speech;
