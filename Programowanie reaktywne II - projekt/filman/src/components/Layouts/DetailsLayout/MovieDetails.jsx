@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import placeholderPoster from '../../../assets/placeholderPoster.jpg';
 import {deleteMovie, getMovieDetails} from '../../../api/ApiManager';
 import {useNavigate} from "react-router-dom";
+import {isExpired} from "react-jwt";
 
 const MovieDetails = (props) => {
     const [movie, setMovie] = useState({});
@@ -57,17 +58,19 @@ const MovieDetails = (props) => {
                         className="img-fluid"
                         style={imageStyle}
                     />
-                    <div className="d-flex justify-content-center">
-                        <button type="button" className="btn btn-danger" onClick={handleDelete}>
-                            Usuń ten film
-                        </button>
-                    </div>
+
                 </div>
                 <div className="col-md-6">
-                    <h1 style={{ marginTop: '50px' }}>
+                    <h1 style={{marginTop: '50px'}}>
                         {movie.title === undefined ? 'Brak' : movie.title}
                     </h1>
                     <p>{movie.content === undefined ? currentUrl : movie.content}</p>
+                    <div className="d-flex justify-content-center">
+                        {isExpired(localStorage.getItem('token')) ? <span></span> :
+                            <button type="button" className="btn btn-danger" onClick={handleDelete}>
+                                Usuń ten film
+                            </button>}
+                    </div>
                 </div>
             </div>
         </div>

@@ -27,6 +27,7 @@ const AddMovie = (props) => {
     };
 
     return(
+        <div className="loginContainer">
         <div className="container">
             <form>
                 <div className="form-group">
@@ -54,16 +55,21 @@ const AddMovie = (props) => {
                               value={content}
                               onChange={handleContentChange}
                               id="description"
+                              style={{height: 450}}
                     ></textarea>
                 </div>
 
-                <div style={{textAlign: "center",display:"flex", justifyContent:"space-evenly", marginTop: "30px" }}>
-                    <button type="button" className="btn btn-danger" onClick={handleSubmit} style={{width:"25%"}}>Dodaj</button>
-                    <button type="reset" className="btn btn-danger" style={{width:"25%"}}>Wyczyść</button>
+                <div style={{textAlign: "center", display: "flex", justifyContent: "space-evenly", marginTop: "30px"}}>
+                    <button type="button" className="btn btn-danger" onClick={handleSubmit}
+                            style={{width: "25%"}}>Dodaj
+                    </button>
+                    <button type="reset" className="btn btn-danger" style={{width: "25%"}}>Wyczyść</button>
                 </div>
             </form>
+
+        </div>
         </div>
     )
 }
 
-export default  AddMovie;
+export default AddMovie;

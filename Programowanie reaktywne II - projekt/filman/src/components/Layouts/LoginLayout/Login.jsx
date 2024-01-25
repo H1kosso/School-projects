@@ -5,6 +5,7 @@ import '../../../styles/Login.css'
 import LoginButton from "../../common/LoginButton";
 import '../../../api/ApiManager'
 import {authUser} from "../../../api/ApiManager";
+
 const Login = () => {
     let navigate = useNavigate()
 
@@ -64,45 +65,54 @@ const Login = () => {
     };
 
     return (
-        <div className="loginContainer">
-            <h1>Logowanie</h1>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="username">Nazwa użytkownika: </label>
-                    <input
-                        value={account.username}
-                        name="username"
-                        onChange={handleChange}
-                        type="text"
-                        className="form-control"
-                        id="username"
-                        aria-describedby="emailHelp"
-                        placeholder="Nazwa użytkownika"
-                    />
-                    {errors.username && (
-                        <div className="alert alert-danger">{errors.username}</div>
-                    )}
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Hasło: </label>
-                    <input
-                        value={account.password}
-                        name="password"
-                        onChange={handleChange}
-                        type="password"
-                        className="form-control"
-                        id="password"
-                        placeholder="hasło"
-                    />
-                    {errors.password && (
-                        <div className="alert alert-danger">{errors.password}</div>
-                    )}
-                </div>
-                <div style={{textAlign: "center",display:"flex", justifyContent:"space-evenly", marginTop: "30px" }}>
-                    <button type="submit" className="btn btn-danger" style={{width:"25%"}}>Zaloguj</button>
-                    <Link className="btn btn-danger"  style={{width:"25%"}} to="/register" role="button">Zarejestruj się</Link>
-                </div>
-            </form>
+        <div>
+            <div className="loginContainer">
+                <h1>Logowanie</h1>
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="username">Nazwa użytkownika: </label>
+                        <input
+                            value={account.username}
+                            name="username"
+                            onChange={handleChange}
+                            type="text"
+                            className="form-control"
+                            id="username"
+                            aria-describedby="emailHelp"
+                            placeholder="Nazwa użytkownika"
+                        />
+                        {errors.username && (
+                            <div className="alert alert-danger">{errors.username}</div>
+                        )}
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password">Hasło: </label>
+                        <input
+                            value={account.password}
+                            name="password"
+                            onChange={handleChange}
+                            type="password"
+                            className="form-control"
+                            id="password"
+                            placeholder="hasło"
+                        />
+                        {errors.password && (
+                            <div className="alert alert-danger">{errors.password}</div>
+                        )}
+                    </div>
+                    <div style={{
+                        textAlign: "center",
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                        marginTop: "30px"
+                    }}>
+                        <button type="submit" className="btn btn-danger" style={{width: "25%"}}>Zaloguj</button>
+                        <Link className="btn btn-danger" style={{width: "25%"}} to="/register" role="button">Zarejestruj
+                            się</Link>
+                    </div>
+                </form>
+            </div>
+            <div style={{height: '45vh', display: "block"}}></div>
         </div>
     );
 };

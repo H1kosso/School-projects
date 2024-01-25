@@ -15,7 +15,7 @@ function App() {
 
     return (
         <>
-            <div style={{backgroundColor: "bisque"}}>
+            <div style={{backgroundColor: "bisque", height: '100%'}}>
                 <BrowserRouter>
                     <NavBar/>
                     <Routes>
@@ -24,7 +24,8 @@ function App() {
                         <Route path="register" element={<Register/>}/>
                         <Route path="details/:id" element={<MovieDetails/>}/>
                         <Route path="add"
-                               element={isExpired(localStorage.getItem('token')) ? <Navigate replace to="/"/> : <AddMovie/>}/>
+                               element={isExpired(localStorage.getItem('token')) ? <Navigate replace to="/"/> :
+                                   <AddMovie/>}/>
 
                         <Route
                             path="*"

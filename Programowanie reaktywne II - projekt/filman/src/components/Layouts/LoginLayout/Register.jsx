@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import '../../../styles/Login.css'
 import LoginButton from "../../common/LoginButton";
 import '../../../api/ApiManager'
 import {createUser} from "../../../api/ApiManager";
+
 const Register = () => {
     let navigate = useNavigate()
 
@@ -33,7 +34,7 @@ const Register = () => {
     };
 
     const handleChangeRoute = () => {
-        navigate('/');
+        navigate('/login');
         window.location.reload()
     };
 
@@ -46,9 +47,8 @@ const Register = () => {
 
         createUser(account.username, account.email, account.password)
             .then((response) => {
-                localStorage.setItem('token', response.id);
                 handleChangeRoute();
-        })
+            })
             .catch((error) => {
                 const errorMessages = {};
                 errorMessages.password =
@@ -59,7 +59,7 @@ const Register = () => {
     };
 
     const handleChange = (event) => {
-        const { name, value } = event.target;
+        const {name, value} = event.target;
         setAccount((prevAccount) => ({
             ...prevAccount,
             [name]: value
@@ -67,6 +67,7 @@ const Register = () => {
     };
 
     return (
+        <div>
         <div className="loginContainer">
             <h1>Rejestracja</h1>
             <form onSubmit={handleSubmit}>
@@ -102,7 +103,7 @@ const Register = () => {
                         <div className="alert alert-danger">{errors.username}</div>
                     )}
                 </div>
-                    <div className="form-group">
+                <div className="form-group">
                     <label htmlFor="password">Hasło: </label>
                     <input
                         value={account.password}
@@ -117,12 +118,15 @@ const Register = () => {
                         <div className="alert alert-danger">{errors.password}</div>
                     )}
                 </div>
-                <div style={{textAlign: "center",display:"flex", justifyContent:"space-evenly", marginTop:"30px"}}>
-                    <button type="submit" className="btn btn-danger" style={{width:"25%"}}>Zarejestruj</button>
-                    <Link className="btn btn-danger"  style={{width:"25%"}} to="/login" role="button">Zaloguj się</Link>
+                <div style={{textAlign: "center", display: "flex", justifyContent: "space-evenly", marginTop: "30px"}}>
+                    <button type="submit" className="btn btn-danger" style={{width: "25%"}}>Zarejestruj</button>
+                    <Link className="btn btn-danger" style={{width: "25%"}} to="/login" role="button">Zaloguj się</Link>
                 </div>
             </form>
+
         </div>
+    <div style={{height: '40vh', display: "block"}}></div>
+    </div>
     );
 };
 

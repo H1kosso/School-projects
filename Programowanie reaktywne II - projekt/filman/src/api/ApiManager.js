@@ -11,9 +11,14 @@ const getAllMovies = async () => {
         return null;
     }
 }
+const getRandomMovie = async () => {
+    const data = await getAllMovies();
+    const id = data[Math.floor(Math.random() * data.length)].id;
+    return id;
+}
+
 const getMovieDetails = async (id) => {
     try {
-        console.log(id)
         const response = await axios.get(`${apiUrl}api/movies/${id}`);
         return response.data;
     } catch (error) {
@@ -80,4 +85,4 @@ const authUser = async (name, password) => {
         return null;
     }
 };
-export {getAllMovies, getMovieDetails, addMovie, deleteMovie, createUser, authUser}
+export {getAllMovies, getMovieDetails,getRandomMovie, addMovie, deleteMovie, createUser, authUser}

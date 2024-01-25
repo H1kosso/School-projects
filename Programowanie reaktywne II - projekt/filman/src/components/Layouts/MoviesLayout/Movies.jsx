@@ -1,7 +1,7 @@
 import ExampleMovies from "./ExampleMovies";
 import MovieCard from "./MovieCard";
-import { getAllMovies } from "../../../api/ApiManager";
-import { useEffect, useState } from "react";
+import {getAllMovies} from "../../../api/ApiManager";
+import {useEffect, useState} from "react";
 
 const Movies = (props) => {
     const [movies, setMovies] = useState([]);
