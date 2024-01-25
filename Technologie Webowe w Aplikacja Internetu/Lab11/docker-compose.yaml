@@ -1,7 +1,19 @@
 version: '3.8'
 services:
- db:
-   image: mongo
-   container_name: mongodb
-   ports:
-     - "27017:27017"
+  db:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+
+  express:
+    build: aplikacja-node
+    ports:
+      - "3001:3001"
+    links:
+      - db
+
+  react:
+    build: aplikacja-react
+    ports:
+      - "3000:3000"
